@@ -1,0 +1,15 @@
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const router = require("./routing/routing");
+const requestLogger = require("./utilities/requestlogger");
+const errorLogger = require("./utilities/errorlogger");
+const helmet = require("helmet");
+app.use(cors());
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(requestLogger);
+app.use("/", router);
+app.use(errorLogger);
+app.listen(3000, console.log("Server started at port 3000"));

@@ -1,0 +1,88 @@
+<div class="container-fluid w-50 p-5">
+    <div class="col-md-offset-2 mt-2">
+        <div class="border rounded">
+            <form [formGroup]="signInForm" (ngSubmit)="signUp()">
+                <div class="card shadow border-primary">
+                    <div class="card-header bg text-center">
+                        <h1 class="text-monospace text-light my-2">Sign Up</h1>
+                    </div>
+                    <div class="card-body shadow">
+                        <div class="form-group">
+                            <label for="username"> <strong>Username</strong> </label>
+                            <input class="form-control my-1" type="text" formControlName="username"
+                                placeholder="Enter username" />
+                            <div class="text-danger" *ngIf="
+                  signInForm.controls['username'].dirty &&
+                  signInForm.controls['username'].touched
+                ">
+                                <span class="text-danger" *ngIf="signInForm.controls['username']?.errors?.['required']">
+                                    Username is required
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email"> <strong>Email</strong> </label>
+                            <input class="form-control my-1" type="text" formControlName="email"
+                                placeholder="Enter your email" />
+                            <div class="text-danger" *ngIf="
+                  signInForm.controls['email'].dirty &&
+                  signInForm.controls['email'].touched">
+                                <span class="text-danger" *ngIf="signInForm.controls['email']?.errors?.['required']">
+                                    Email id is required
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="!submitted && signInForm.controls['email']?.errors?.['email']">
+                                    Invalid Email Id
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="password"> <strong>Password</strong> </label>
+
+                            <input class="form-control my-1" type="password" formControlName="password"
+                                placeholder="Enter your password" autocomplete="off" />
+
+                            <div class="text-danger" *ngIf="
+                  signInForm.controls['password'].dirty &&
+                  signInForm.controls['password'].touched
+                ">
+                                <span class="text-danger" *ngIf="signInForm.controls['password']?.errors?.['required']">
+                                    Password is required
+                                </span>
+
+                                <span class="text-danger" *ngIf="signInForm.controls['password']?.errors?.['pattern']">
+                                    Password should contain atleast a capital letter, symbol and
+                                    number
+                                </span>
+
+                                <span class="text-danger" *ngIf="signInForm.controls['password']?.errors?.['min']">
+                                    Password should atleast 8 letter
+                                </span>
+                            </div>
+                        </div>
+
+                        <button [disabled]="!submitted && signInForm.invalid" type="submit"
+                            class="btn bg text-light form-control">
+                            Sign up
+                        </button>
+
+                        <div class="text-center my-2">
+                            <span>
+                                <strong>Already a member? </strong>
+                                <a class="text-primary" role="button" [routerLink]="'/login'">Login</a></span>
+                        </div>
+
+                        <div class="text-success" *ngIf="successMsg; else message">
+                            {{ successMsg }}
+                        </div>
+
+                        <ng-template #message>
+                            <div class="text-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
+                        </ng-template>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

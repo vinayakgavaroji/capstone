@@ -1,0 +1,161 @@
+<div class="container">
+
+    <div class="mat-dialog-container row">
+  
+      <div class="card border-0">
+  
+        <div class="card-header bg-transparent position-relative pb-0">
+  
+          <h1 *ngIf="!isEdit" class="my-1 text-dark headerfontStyle">Add Expense</h1>
+  
+          <h1 *ngIf="isEdit" class="my-1 text-dark headerfontStyle">Edit Expense</h1>
+  
+          <button type="button" (click)="close()" class="btn-close position-absolute top-0 end-0 m-2"
+  
+            aria-label="Close"></button>
+  
+        </div>
+  
+        <form [formGroup]="addExpenseForm" (ngSubmit)="addNewExpense()">
+  
+          <div class="card-body">
+  
+            <div class="from-group">
+  
+              <label for="productName"><strong>Item Name</strong></label>
+  
+              <input type="text" id="productName" placeholder="Enter item name" class="form-control"
+  
+                formControlName="productName" />
+  
+              <div class="text-danger"
+  
+                *ngIf="addExpenseForm.controls['productName'].dirty && addExpenseForm.controls['productName'].touched">
+  
+                <span class="text-danger"
+  
+                  *ngIf="addExpenseForm.controls['productName']?.errors?.['required']">Item name is
+  
+                  required</span>
+  
+              </div>
+  
+            </div>
+  
+            <div class="from-group">
+  
+              <label for="amount"><strong>Amount</strong></label>
+  
+              <input type="number" id="amount" placeholder="Enter amount" class="form-control"
+  
+                formControlName="amount" />
+  
+              <div class="text-danger"
+  
+                *ngIf="addExpenseForm.controls['amount'].dirty && addExpenseForm.controls['amount'].touched">
+  
+                <span class="text-danger"
+  
+                  *ngIf="addExpenseForm.controls['amount']?.errors?.['required']">Amount is
+  
+                  required</span>
+  
+              </div>
+  
+            </div>
+  
+            <div class="from-group">
+  
+              <label for="date"><strong>Date</strong></label>
+  
+              <input type="date" id="date" placeholder="Enter date" class="form-control"
+  
+                formControlName="date" />
+  
+              <div class="text-danger"
+  
+                *ngIf="addExpenseForm.controls['date'].dirty && addExpenseForm.controls['date'].touched">
+  
+                <span class="text-danger" *ngIf="addExpenseForm.controls['date']?.errors?.['required']">Date
+  
+                  is required</span>
+  
+              </div>
+  
+            </div>
+  
+            <div class="from-group">
+  
+              <label for="category"><strong>Category</strong></label>
+  
+              <select class="form-control" formControlName="category" name="category">
+  
+                <option value="select">--select--</option>
+  
+                <option *ngFor="let c of categoryList" [value]="c">{{ c }}</option>
+  
+              </select>
+  
+              <div class="text-danger"
+  
+                *ngIf="addExpenseForm.controls['category'].dirty && addExpenseForm.controls['category'].touched">
+  
+                <span class="text-danger"
+  
+                  *ngIf="addExpenseForm.controls['category']?.errors?.['required']">Category is
+  
+                  required</span>
+  
+              </div>
+  
+            </div>
+  
+            <div class="from-group">
+  
+              <label for="description"><strong>Description</strong></label>
+  
+              <input type="text" placeholder="Describe the item" id="description" class="form-control"
+  
+                formControlName="description" />
+  
+              <div class="text-danger"
+  
+                *ngIf="addExpenseForm.controls['description'].dirty && addExpenseForm.controls['description'].touched">
+  
+                <span class="text-danger"
+  
+                  *ngIf="addExpenseForm.controls['description']?.errors?.['required']">Description is
+  
+                  required</span>
+  
+              </div>
+  
+            </div>
+  
+            <div class="from-group">
+  
+              <button [disabled]="!submitted && addExpenseForm.invalid" *ngIf="!isEdit" class="btn btn-primary form-control mt-3 buttonFontStyle" href="#">Add</button>
+  
+              <button [disabled]="!submitted && addExpenseForm.invalid" *ngIf="isEdit" class="btn btn-primary form-control mt-3 buttonFontStyle" href="#">Edit</button>
+  
+            </div>
+  
+            <div class="text-success text-center my-1" *ngIf="!isEdit && successMsg">{{successMsg}}</div>
+  
+            <div class="text-success text-center my-1" *ngIf="isEdit && successMsg">{{successMsg}}</div>
+  
+            <!-- <ng-template #message>
+  
+              <div class="text-danger text-center my-1" *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>
+  
+            </ng-template> -->
+  
+          </div>
+  
+        </form>
+  
+      </div>
+  
+    </div>
+  
+  </div>

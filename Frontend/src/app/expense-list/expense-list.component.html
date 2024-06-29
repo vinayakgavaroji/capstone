@@ -1,0 +1,195 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid shadow rounded p-1">
+  <h1 class="mt-2 headerfontStyle">Personal Expense Manager</h1>
+
+  <hr />
+
+  <!-- <div class="container-fluid">
+    <div class="d-flex">
+      <button type="button" class="btn btn-primary buttonFontStyle" (click)="addExpense()">
+        Add Expense
+      </button>
+  
+      <div class="mx-1">
+        <select class="form-control custom-select headerfontStyle" [(ngModel)]="selectedCategory">
+          <option value="all">filter by category</option>
+          <option value="food">food</option>
+          <option value="shopping">shopping</option>
+          <option value="travel">travel</option>
+          <option value="health">health</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <input class="form-control" [(ngModel)]="searchExpense" type="search" placeholder="Search by product name"
+          aria-label="Search" />
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Modal -->
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title text-center my-2" id="exampleModalLabel">
+            <strong>Set budget for category</strong>
+          </h1>
+
+          <!-- <button type="button" class="btn-close position-absolute top-0 end-0 my-1 mx-2" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        </div>
+
+        <div class="modal-body">
+          <form [formGroup]="budgetForm" (ngSubmit)="setBudget()">
+            <div class="form-group">
+              <label for="category"><strong>Category</strong></label>
+
+              <input type="text" class="form-control" formControlName="category" value="{{ categoryValue }}" />
+
+              <div class="text-danger" *ngIf="
+                    budgetForm.controls['category'].dirty &&
+                    budgetForm.controls['category'].touched
+                  ">
+                <span class="text-danger" *ngIf="budgetForm.controls['category']?.errors?.['required']">Category is
+                  required</span>
+              </div>
+            </div>
+
+            <div class="from-group">
+              <label for="amount"><strong>Amount</strong></label>
+
+              <input type="number" id="amount" placeholder="Enter amount" class="form-control"
+                formControlName="amount" />
+
+              <div class="text-danger" *ngIf="
+                    budgetForm.controls['amount'].dirty &&
+                    budgetForm.controls['amount'].touched
+                  ">
+                <span class="text-danger" *ngIf="budgetForm.controls['amount']?.errors?.['required']">Amount is
+                  required</span>
+              </div>
+            </div>
+
+            <div class="form-group my-2">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+
+              <button [disabled]="!submitted && budgetForm.invalid" type="submit"
+                class="btn btn-primary mx-1 buttonFontStyle">
+                Set
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">
+            <strong>Budget Details</strong>
+          </h1>
+        </div>
+
+        <div class="modal-body text-center">
+          <span>
+            <h1>Category: {{ categoryValue }}</h1>
+          </span>
+
+          <span>
+            <h1>Total Amount: {{ totalAmount }}</h1>
+          </span>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary buttonFontStyle" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-3">
+  <div class="row g-3">
+    <div class="col-12 col-md-3">
+      <button type="button" class="btn btn-primary buttonFontStyle" (click)="addExpense()">
+        Add Expense
+      </button>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <select class="form-control custom-select headerfontStyle" [(ngModel)]="selectedCategory">
+        <option value="all">Filter by category</option>
+        <option value="food">Food</option>
+        <option value="shopping">Shopping</option>
+        <option value="travel">Travel</option>
+        <option value="health">Health</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <input class="form-control" [(ngModel)]="searchExpense" type="search" placeholder="Search by product name"
+        aria-label="Search" />
+    </div>
+  </div>
+</div>
+
+<div class="container-fuild mt-2">
+  <div class="table-responsive">
+    <table class="table bgColor">
+      <thead>
+        <tr class="text-center fontStyle">
+          <th scope="col">Product ID</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Date</th>
+          <th scope="col">Category</th>
+          <th scope="col">Description</th>
+          <th scope="col">Action Item</th>
+        </tr>
+      </thead>
+
+      <tbody *ngFor="let e of expenseData | filterByCategory : selectedCategory | seachByExpense : searchExpense">
+        <tr class="text-center tableDataFS">
+          <td>{{ e.expenseId }}</td>
+          <td>{{ e.productName }}</td>
+          <td>{{ e.amount | currency : "INR" }}</td>
+          <td>{{ e.date | date : "MM-dd-yyyy" }}</td>
+          <td>{{ e.category }}</td>
+          <td>{{ e.description }}</td>
+          <td>
+            <button class="btn btn-secondary buttonFontStyle" data-toggle="tooltip" data-placement="right"
+              title="Edit expense" (click)="edit(e.expenseId)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+
+            <button class="btn btn-warning text-light buttonFontStyle mx-1" data-toggle="tooltip" data-placement="right"
+              title="View total expense" (click)="calculateTotal(e.category)" data-bs-toggle="modal"
+              data-bs-target="#exampleModal1">
+              <i class="bi bi-eye"></i>
+            </button>
+
+            <button class="btn btn-danger buttonFontStyle" data-toggle="tooltip" data-placement="right"
+              title="Delete expense" (click)="deleteExpense(e.expenseId)">
+              <i class="bi bi-trash3"></i>
+            </button>
+
+            <button class="btn btn-success buttonFontStyle mx-1" data-toggle="tooltip" data-placement="right"
+              title="Set budget" type="button" (click)="fetchCategory(e.category)" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">
+              Set Budget
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
