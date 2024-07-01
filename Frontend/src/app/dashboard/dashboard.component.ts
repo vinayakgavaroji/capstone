@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Chart, registerables } from 'chart.js';
 import { SharedService } from 'src/services/shared.service';
 
 @Component({
@@ -9,7 +9,6 @@ import { SharedService } from 'src/services/shared.service';
 })
 export class DashboardComponent implements OnInit {
   barGraph!: Chart;
-  pieChart!: Chart;
   totalAmountByCategory: number = 0;
   totalAmountByMonth: number = 0;
   categoryValue: string = '';
@@ -17,12 +16,12 @@ export class DashboardComponent implements OnInit {
   expenseDataByMonth: any[] = [];
   categories: any[] = [];
 
-  constructor(private shared: SharedService) {}
+  constructor(private shared: SharedService) {
+    Chart.register(...registerables);
+  }
 
   ngOnInit() {
     this.getAllExpensesInBarGraph();
-
-    // this.getAllExpensesByMonth();
   }
 
   getAllExpensesInBarGraph() {
@@ -34,6 +33,12 @@ export class DashboardComponent implements OnInit {
           {
             label: 'Expenses by category bar',
             data: [],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(255, 205, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+            ]
           },
         ],
       },
@@ -45,7 +50,6 @@ export class DashboardComponent implements OnInit {
         },
       },
     });
-
     this.shared.calculateTotalAmountByCategory().subscribe((eachCategory) => {
       eachCategory.filter((item: any) => {
         this.barGraph.data.labels?.push(item._id);
@@ -53,40 +57,4 @@ export class DashboardComponent implements OnInit {
       });
     });
   }
-
-  // getAllExpensesByMonth(){
-
-  // const monthlyTotals : any = {};
-
-  // this.addExpenseService.getAllExpense().subscribe((data) => {
-
-  // this.expenseDataByMonth = data;
-
-  // this.expenseDataByMonth.forEach((expense) => {
-
-  // let date = new Date(expense.date);
-
-  // const month = date.getMonth() + 1
-
-  // // this.totalAmountByMonth = this.expenseDataByMonth.filter(item => {
-
-  // // let d = new Date(item.date);
-
-  // // let m = (d.getMonth()+1);
-
-  // // return month === m;
-
-  // // }).reduce((sum, item) => sum + item.amount,0)
-
-  // monthlyTotals[month] = (monthlyTotals[month] || 0) + expense.amount;
-
-  // this.pieChart.data.datasets[0].data.push(monthlyTotals[month]);
-
-  // return this.pieChart.data
-
-  // })
-
-  // })
-
-  // }
 }

@@ -5,28 +5,30 @@
 
   <hr />
 
-  <!-- <div class="container-fluid">
-    <div class="d-flex">
-      <button type="button" class="btn btn-primary buttonFontStyle" (click)="addExpense()">
-        Add Expense
-      </button>
+  <div class="container-fluid mt-3">
+    <div class="row g-3">
+      <div class="col-12 col-md-3">
+        <button type="button" class="btn btn-primary buttonFontStyle" (click)="addExpense()">
+          Add Expense
+        </button>
+      </div>
   
-      <div class="mx-1">
+      <div class="col-12 col-md-3">
         <select class="form-control custom-select headerfontStyle" [(ngModel)]="selectedCategory">
-          <option value="all">filter by category</option>
-          <option value="food">food</option>
-          <option value="shopping">shopping</option>
-          <option value="travel">travel</option>
-          <option value="health">health</option>
+          <option value="all">Filter by category</option>
+          <option value="food">Food</option>
+          <option value="shopping">Shopping</option>
+          <option value="travel">Travel</option>
+          <option value="health">Health</option>
         </select>
       </div>
   
-      <div class="form-group">
+      <div class="col-12 col-md-6">
         <input class="form-control" [(ngModel)]="searchExpense" type="search" placeholder="Search by product name"
           aria-label="Search" />
       </div>
     </div>
-  </div> -->
+  </div>
 
   <!-- Modal -->
 
@@ -117,31 +119,6 @@
   </div>
 </div>
 
-<div class="container-fluid mt-3">
-  <div class="row g-3">
-    <div class="col-12 col-md-3">
-      <button type="button" class="btn btn-primary buttonFontStyle" (click)="addExpense()">
-        Add Expense
-      </button>
-    </div>
-
-    <div class="col-12 col-md-3">
-      <select class="form-control custom-select headerfontStyle" [(ngModel)]="selectedCategory">
-        <option value="all">Filter by category</option>
-        <option value="food">Food</option>
-        <option value="shopping">Shopping</option>
-        <option value="travel">Travel</option>
-        <option value="health">Health</option>
-      </select>
-    </div>
-
-    <div class="col-12 col-md-6">
-      <input class="form-control" [(ngModel)]="searchExpense" type="search" placeholder="Search by product name"
-        aria-label="Search" />
-    </div>
-  </div>
-</div>
-
 <div class="container-fuild mt-2">
   <div class="table-responsive">
     <table class="table bgColor">
@@ -157,8 +134,8 @@
         </tr>
       </thead>
 
-      <tbody *ngFor="let e of expenseData | filterByCategory : selectedCategory | seachByExpense : searchExpense">
-        <tr class="text-center tableDataFS">
+      <tbody class="text-center" *ngFor="let e of expenseData | filterByCategory : selectedCategory | seachByExpense : searchExpense">
+        <tr class="tableDataFS">
           <td>{{ e.expenseId }}</td>
           <td>{{ e.productName }}</td>
           <td>{{ e.amount | currency : "INR" }}</td>
