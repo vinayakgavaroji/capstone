@@ -5,12 +5,13 @@ import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from 'src/guard/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'expense-list', component: ExpenseListComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'expense-list', component: ExpenseListComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'add-expense', component: AddExpenseComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: '**', redirectTo: '/login' },

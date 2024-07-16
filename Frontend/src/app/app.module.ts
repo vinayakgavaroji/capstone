@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from 'src/services/auth.service';
+import { AuthGuard } from 'src/guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatDialogModule
   ],
-  providers: [SharedService, AddExpenseService],
+  providers: [SharedService, AddExpenseService,AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

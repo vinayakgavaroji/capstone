@@ -15,10 +15,6 @@ export class SharedService {
     return this.http.get<any>(this._url + '/getAllUsers');
   }
 
-  userLogin(body: any): Observable<any> {
-    return this.http.post<any>(this._url + '/api/login', body);
-  }
-
   signUp(body: any): Observable<any> {
     return this.http.post<any>(this._url + '/api/signup', body);
   }

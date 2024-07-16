@@ -1,5 +1,5 @@
 <section>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg justify-content-between">
         <div class="container-fluid">
             <a class="navbar-brand text-light fontStyle" [routerLink]="'/expense-list'">WealthWise</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -10,9 +10,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active text-light" [routerLink]="'/dashboard'">Dashboard</a>
+                        <a class="nav-link active text-light" [routerLink]="'/dashboard'">dashboard</a>
                     </li>
                 </ul>
+                <div>
+                    <button class="btn btn-danger" (click)="logout()"><i class="bi bi-power"></i>Logout</button>
+                </div>
             </div>
         </div>
     </nav>
