@@ -15,7 +15,6 @@ export class AddExpenseComponent implements OnInit {
   successMsg: string = '';
   errorMsg: string = '';
   data: any;
-  updateValues: any[] = [];
   isEdit: boolean = false;
   categoryList = ['shopping', 'food', 'travel', 'health'];
 
@@ -23,7 +22,6 @@ export class AddExpenseComponent implements OnInit {
     private fb: FormBuilder,
     private addExpense: AddExpenseService,
     private dialogRef: MatDialogRef<any>,
-    private _router: Router,
     @Inject(MAT_DIALOG_DATA) public injectedData: any,
     public dialog?: MatDialogRef<AddExpenseComponent>
   ) {
@@ -59,31 +57,17 @@ export class AddExpenseComponent implements OnInit {
     this.submitted = true;
 
     if (!this.isEdit) {
-      this.addExpense
-        .addExpense(this.addExpenseForm.value)
-        .subscribe((expense) => {
-          this.successMsg = expense.message;
-        });
+      this.addExpense.addExpense(this.addExpenseForm.value).subscribe((expense) => {
+        this.successMsg = expense.message;
+      });
     } else {
-      this.addExpense
-        .editExpense(this.data.id, this.addExpenseForm.value)
-        .subscribe((res) => {
-          this.successMsg = res.message;
-        });
+      this.addExpense.editExpense(this.data.id, this.addExpenseForm.value).subscribe((res) => {
+        this.successMsg = res.message;
+      });
     }
   }
 
   close() {
     this.dialogRef.close();
-
-    this.reloadComponent();
-  }
-
-  reloadComponent() {
-    this._router
-      .navigateByUrl('/expense-list', { skipLocationChange: true })
-      .then(() => {
-        this._router.navigate(['/expense-list']);
-      });
   }
 }

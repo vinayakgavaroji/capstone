@@ -9,6 +9,7 @@ import { SharedService } from 'src/services/shared.service';
 })
 export class DashboardComponent implements OnInit {
   barGraph!: Chart;
+  lineGraph! : Chart
   totalAmountByCategory: number = 0;
   totalAmountByMonth: number = 0;
   categoryValue: string = '';
@@ -41,13 +42,6 @@ export class DashboardComponent implements OnInit {
             ]
           },
         ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
       },
     });
     this.shared.calculateTotalAmountByCategory().subscribe((eachCategory) => {

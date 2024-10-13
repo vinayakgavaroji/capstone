@@ -16,6 +16,7 @@
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "aot": true,
             "polyfills": [
               "zone.js"
             ],
@@ -67,7 +68,9 @@
               "browserTarget": "Frontend:build:production"
             },
             "development": {
-              "browserTarget": "Frontend:build:development"
+              "browserTarget": "Frontend:build:development",
+              "watch": true,
+              "liveReload": true
             }
           },
           "defaultConfiguration": "development"
