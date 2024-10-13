@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddExpenseService } from 'src/services/add-expense.service';
 import { SharedService } from 'src/services/shared.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-expense-list',
@@ -27,23 +26,22 @@ export class ExpenseListComponent implements OnInit {
     private dialog: MatDialog,
     private addExpenseService: AddExpenseService,
     private fb: FormBuilder,
-    private shared: SharedService,
-    private _router: Router
-  ) {}
+    private shared: SharedService
+  ) { }
 
   ngOnInit() {
     this.budgetForm = this.fb.group({
       category: { value: '', disabled: true },
-
       amount: ['', [Validators.required]],
     });
 
     // this.shared.getBudget().subscribe((res) => {
-
     // this.dataBudget = res;
-
     // })
+    this.loadExpanses();
+  }
 
+  loadExpanses() {
     this.addExpenseService.getAllExpense().subscribe((expense) => {
       this.expenseData = expense;
     });
@@ -62,7 +60,6 @@ export class ExpenseListComponent implements OnInit {
   async addExpense() {
     const dialogRef = await this.dialog.open(AddExpenseComponent, {
       width: '600px',
-
       height: '450px',
     });
   }
@@ -73,43 +70,28 @@ export class ExpenseListComponent implements OnInit {
 
   async setBudget() {
     this.submitted = true;
-
     const body = {
       category: this.categoryValue,
-
       amount: this.budgetForm.value.amount,
     };
 
     await this.shared.setBudget(body).subscribe((data) => {
       alert('Budget Set Successfully');
     });
-
-    this.reloadComponent();
   }
 
   async edit(id: any) {
     const dialogRef = await this.dialog.open(AddExpenseComponent, {
       width: '600px',
-
       height: '450px',
-
       data: { id, isEdit: false },
     });
   }
 
   async deleteExpense(id: any) {
-    console.log(id);
-
     await this.addExpenseService.deleteExpense(id).subscribe(() => {
       alert('Deleted successfully');
+      this.loadExpanses()
     });
-  }
-
-  reloadComponent() {
-    this._router
-      .navigateByUrl('/expense-list', { skipLocationChange: true })
-      .then(() => {
-        this._router.navigate(['/expense-list']);
-      });
   }
 }
